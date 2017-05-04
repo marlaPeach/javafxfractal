@@ -43,8 +43,8 @@ public class JavaFXFractal extends Application {
     Stage pStage;
     Canvas canvas;
     GraphicsContext g;
-    int lastMouseX = WIDTH / 2;
-    int lastMouseY = HEIGHT / 2;
+//    int lastMouseX = WIDTH / 2;
+//    int lastMouseY = HEIGHT / 2;
     double magnification = 1;
     int maxLoops = 1000;
     double xCenterReal = 0.0;
@@ -77,8 +77,10 @@ public class JavaFXFractal extends Application {
 
         // each rectangular cell can be clicked to turn it on or off
         canvas.setOnMouseClicked((MouseEvent event) -> {
-            lastMouseX = (int) event.getX();
-            lastMouseY = (int) event.getY();
+            int lastMouseX = (int) event.getX();
+            int lastMouseY = (int) event.getY();
+            xCenterReal = xCenterReal + ((lastMouseX - WIDTH / 2) * 4.0 / magnification / WIDTH);
+            yCenterReal = yCenterReal - ((lastMouseY - WIDTH / 2) * 4.0 / magnification / WIDTH);
             drawFractal();
         });
         BorderPane borderPane = new BorderPane();
@@ -105,9 +107,6 @@ public class JavaFXFractal extends Application {
 
         // increment is the pixel to pixel increment amount in real units
         double increment = 4.0 / magnification / WIDTH;
-
-        xCenterReal = xCenterReal + ((lastMouseX - WIDTH / 2) * 4.0 / magnification / WIDTH);
-        yCenterReal = yCenterReal - ((lastMouseY - WIDTH / 2) * 4.0 / magnification / WIDTH);
 
         double centerWidthReal = WIDTH / 2 * increment;
         double xTopLeftReal = xCenterReal - centerWidthReal;
@@ -245,8 +244,8 @@ public class JavaFXFractal extends Application {
         MenuItem maxLoops = new MenuItem("Maximum Iterations");
         maxLoops.setAccelerator(KeyCombination.keyCombination("Ctrl+R"));
         maxLoops.setOnAction(e -> {
-        // todo - add dialog box to get maxloops
-        
+            // todo - add dialog box to get maxloops
+
         });
         optionsMenu.getItems().add(maxLoops);
 
