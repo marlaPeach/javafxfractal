@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -241,13 +243,17 @@ public class JavaFXFractal extends Application {
          * *********************************************************************
          * Options Menu Section
          */
-        MenuItem maxLoops = new MenuItem("Maximum Iterations");
-        maxLoops.setAccelerator(KeyCombination.keyCombination("Ctrl+R"));
-        maxLoops.setOnAction(e -> {
-            // todo - add dialog box to get maxloops
-
+        MenuItem maxLoopsMI = new MenuItem("Maximum Loops");
+        maxLoopsMI.setAccelerator(KeyCombination.keyCombination("Ctrl+L"));
+        maxLoopsMI.setOnAction(e -> {
+            TextInputDialog dialog = new TextInputDialog(""+maxLoops);
+            dialog.setTitle("John's Fractal Dialog");
+            dialog.setHeaderText("Set Maximum Loops");
+            dialog.setContentText("Enter maximum loops: ");
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(loops -> maxLoops = Integer.parseInt(loops));
         });
-        optionsMenu.getItems().add(maxLoops);
+        optionsMenu.getItems().add(maxLoopsMI);
 
         CheckMenuItem color = new CheckMenuItem("Color Cells");
         color.setAccelerator(KeyCombination.keyCombination("Ctrl+C"));
